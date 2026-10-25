@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Prediction System</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+    <main class="container">
+
+        <div class="header-icon">✚</div>
+
+        <h1>Disease Prediction System</h1>
+
+        <p class="subtitle">
+            Enter your symptoms to get predictions from two
+            machine learning models.
+        </p>
+
+        <form action="{{ url_for('predict') }}" method="POST">
+
+            <label for="symptom-select">
+                Select a symptom
+            </label>
+
+            <select id="symptom-select">
+                <option value="">Choose a symptom...</option>
+
+                {% for symptom in symptom_options %}
+                <option value="{{ symptom.value }}">
+                    {{ symptom.label }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label for="symptoms">
+                Your symptoms
+            </label>
+
+            <textarea
+                id="symptoms"
+                name="symptoms"
+                rows="4"
+                placeholder="Select symptoms above or type them here, separated by commas..."
+                required
+            >{{ symptoms or '' }}</textarea>
+
+            <div class="input-help">
+                Select multiple symptoms or type them manually.
+                Separate each symptom with a comma.
+            </div>
+
+            <button
+                type="button"
+                id="clear-button"
+                class="clear-button"
+            >
+                Clear symptoms
+            </button>
+
+            <button type="submit" class="predict-button">
+                Predict Disease
+            </button>
+
+        </form>
+
+        {% if error %}
+        <div class="message error" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if warning %}
+        <div class="message warning" role="status">
+            {{ warning }}
+        </div>
+        {% endif %}
+
+        {% if softmax_prediction or random_forest_prediction %}
+        <section class="results">
+
+            <h2>Prediction Results</h2>
+
+            <p class="results-subtitle">
+                Results from your two trained models
+            </p>
+
+            <div class="result-card">
+                <div class="model-icon">01</div>
+
+                <div class="result-content">
+                    <h3>Softmax Regression</h3>
+                    <p class="disease-name">
+                        {{ softmax_prediction or 'Unavailable' }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="model-icon">02</div>
+
+                <div class="result-content">
+                    <h3>Random Forest</h3>
+                    <p class="disease-name">
+                        {{ random_forest_prediction or 'Unavailable' }}
+                    </p>
+                </div>
+            </div>
+
+        </section>
+        {% endif %}
+
+        <footer>
+            <span>Educational project only</span>
+            <span>Not a medical diagnosis</span>
+        </footer>
+
+    </main>
+
+    <script>
+        const symptomSelect = document.getElementById("symptom-select");
+        const symptomBox = document.getElementById("symptoms");
+        const clearButton = document.getElementById("clear-button");
+
+        // Normalize names for duplicate checking.
+        function normalize(value) {
+            return value
+                .trim()
+                .toLowerCase()
+                .replace(/[\s-]+/g, "_");
+        }
+
+        // Add the selected symptom to the textbox.
+        symptomSelect.addEventListener("change", function () {
+            const selectedValue = this.value;
+
+            if (!selectedValue) {
+                return;
+            }
+
+            const existingSymptoms = symptomBox.value
+                .split(",")
+                .map(item => item.trim())
+                .filter(Boolean);
+
+            const alreadyExists = existingSymptoms.some(
+                item => normalize(item) === normalize(selectedValue)
+            );
+
+            if (!alreadyExists) {
+                existingSymptoms.push(selectedValue);
+                symptomBox.value = existingSymptoms.join(", ");
+            }
+
+            // Reset dropdown so another symptom can be selected.
+            this.value = "";
+            symptomBox.focus();
+        });
+
+        // Clear all entered symptoms.
+        clearButton.addEventListener("click", function () {
+            symptomBox.value = "";
+            symptomSelect.value = "";
+            symptomBox.focus();
+        });
+    </script>
+</body>
+</html>
