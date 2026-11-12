@@ -1,0 +1,6 @@
+Model,Accuracy,Precision (weighted),Recall (weighted),F1-score (weighted),Precision (macro),Recall (macro),F1-score (macro),Training Time (s),Prediction Time (s),Notes
+KNN,0.8108,0.8123,0.8108,0.8092,0.7313,0.6939,0.7041,0.15,111.04,"KNN has no learning step: training time is only fit() storing the data; its cost is paid at prediction time. Params: {'n_neighbors': 7, 'weights': 'uniform', 'metric': 'cosine'}"
+Naive Bayes,0.8402,0.8758,0.8402,0.8474,0.7092,0.8393,0.743,6.0,0.77,"Params: {'alpha': 0.001, 'fit_prior': False}"
+Logistic Regression (Softmax),0.8318,0.8442,0.8318,0.8331,0.734,0.7458,0.7271,not recorded,0.7,
+Random Forest,0.7919,0.7961,0.7919,0.7902,0.6023,0.557,0.5669,not recorded,1.05,8 trees in the saved file
+XGBoost,Not trained,,,,,,,,,models/xgboost_model.pkl does not exist

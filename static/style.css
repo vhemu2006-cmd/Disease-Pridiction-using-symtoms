@@ -1,328 +1,238 @@
-/* Reset */
+
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
     min-height: 100vh;
-    padding: 35px 18px;
-
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: #183b53;
-
-    background-image: url("/static/background.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    padding: 30px 15px;
+    color: #222;
 }
 
-/* Main glass panel */
 .container {
-    width: 100%;
-    max-width: 820px;
-    margin: 20px auto;
-    padding: 38px;
-
-    background: rgba(255, 255, 255, 0.84);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-    box-shadow: 0 12px 40px rgba(27, 79, 107, 0.15);
+    max-width: 950px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Header */
-.header-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 16px;
-
-    background: linear-gradient(135deg, #168bc2, #2256a5);
-    color: white;
-    border-radius: 16px;
-
-    font-size: 30px;
-    font-weight: bold;
-}
-
-h1 {
-    margin: 0;
+header {
     text-align: center;
-    color: #123f68;
-    font-size: 32px;
-    letter-spacing: -0.5px;
+    margin-bottom: 30px;
 }
 
-.subtitle {
-    max-width: 570px;
-    margin: 12px auto 30px;
-    text-align: center;
-    color: #61798a;
-    font-size: 16px;
-    line-height: 1.7;
+header h1 {
+    color: #176b50;
+    margin-bottom: 10px;
 }
 
-/* Form labels */
+header p {
+    color: #666;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
 label {
     display: block;
-    margin: 22px 0 9px;
-    font-size: 15px;
-    font-weight: 700;
-    color: #244b66;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Dropdown */
-select {
-    display: block;
-    width: 100%;
-    padding: 14px 15px;
-
-    font-family: inherit;
-    font-size: 15px;
-    color: #27475e;
-
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid #cbdde8;
-    border-radius: 11px;
-    outline: none;
-    cursor: pointer;
-
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-select:focus {
-    border-color: #2388c9;
-    box-shadow: 0 0 0 4px rgba(35, 136, 201, 0.12);
-}
-
-/* Symptoms textbox */
-textarea {
-    display: block;
-    width: 100%;
-    min-height: 125px;
-    padding: 15px;
-
-    font-family: inherit;
-    font-size: 15px;
-    line-height: 1.8;
-    color: #274357;
-
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid #cbdde8;
-    border-radius: 11px;
-
-    outline: none;
-    resize: vertical;
-
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-textarea:focus {
-    border-color: #2388c9;
-    box-shadow: 0 0 0 4px rgba(35, 136, 201, 0.12);
-}
-
-.input-help {
-    margin-top: 8px;
-    color: #6d8291;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-/* Buttons */
-button {
+#symptom-input {
     width: 100%;
     padding: 14px;
-    margin-top: 15px;
-
-    border: none;
-    border-radius: 10px;
-
-    font-family: inherit;
+    border: 1px solid #aaa;
+    border-radius: 8px;
     font-size: 15px;
-    font-weight: 700;
+    background: white;
     cursor: pointer;
-
-    transition: transform 0.2s, box-shadow 0.2s;
+    color: #222;
 }
 
-.predict-button {
-    color: white;
-    background: linear-gradient(135deg, #1889c5, #1755a4);
-    box-shadow: 0 5px 14px rgba(21, 85, 163, 0.2);
+#symptom-input:focus {
+    outline: none;
+    border-color: #16845d;
 }
 
-.predict-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(21, 85, 163, 0.25);
+.symptom-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.symptom-dropdown.show {
+    display: block;
+}
+
+.symptom-option {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.symptom-option:hover {
+    background: #e8f5ee;
+}
+
+.symptom-option.selected {
+    background: #d1fae5;
+    font-weight: bold;
+    color: #176b50;
+}
+
+.help-text {
+    color: #777;
+    font-size: 13px;
+    margin-top: 8px;
 }
 
 .clear-button {
     margin-top: 12px;
-    color: #315a75;
-    background: rgba(230, 241, 248, 0.9);
-    border: 1px solid #d3e4ee;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #e5e7eb;
+    cursor: pointer;
 }
 
 .clear-button:hover {
-    background: #dcecf6;
+    background: #d1d5db;
 }
 
-/* Results section */
-.results {
-    margin-top: 35px;
-    padding-top: 25px;
-    border-top: 1px solid #dce8ef;
-}
-
-.results h2 {
-    margin: 0;
-    text-align: center;
-    font-size: 25px;
-    color: #123f68;
-}
-
-.results-subtitle {
-    margin: 9px 0 22px;
-    text-align: center;
-    color: #6b8291;
-    font-size: 14px;
-}
-
-/* Individual model result */
-.result-card {
-    display: flex;
-    align-items: center;
-    gap: 17px;
-
-    margin-top: 15px;
-    padding: 22px;
-
-    background: rgba(241, 249, 255, 0.95);
-    border: 1px solid #d7eaf6;
-    border-left: 5px solid #2186c4;
-    border-radius: 13px;
-
-    box-shadow: 0 4px 14px rgba(28, 77, 105, 0.06);
-}
-
-.model-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-
-    width: 48px;
-    height: 48px;
-
-    background: #dceeff;
-    color: #1764a3;
-    border-radius: 12px;
-
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.result-content {
-    min-width: 0;
-}
-
-.result-card h3 {
-    margin: 0 0 8px;
+.predict-button {
+    width: 100%;
+    padding: 14px;
+    background: #16845d;
+    color: white;
+    border: none;
+    border-radius: 8px;
     font-size: 16px;
-    color: #28638a;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.disease-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.5;
-    color: #173f5f;
-    overflow-wrap: anywhere;
+.predict-button:hover {
+    background: #116b4b;
 }
 
-/* Error and warning messages */
-.message {
+.error-message {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 14px;
     margin-top: 20px;
-    padding: 14px 16px;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
+    border-radius: 8px;
 }
 
-.error {
-    color: #a3212c;
-    background: #fff0f0;
-    border: 1px solid #f2c5c5;
+.result-section {
+    margin-top: 35px;
 }
 
-.warning {
-    color: #805b12;
-    background: #fff8e5;
-    border: 1px solid #f0dfad;
+.result-section h2,
+.result-section h3 {
+    margin-bottom: 15px;
+    color: #176b50;
 }
 
-/* Footer */
-footer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-
-    margin-top: 30px;
-    padding-top: 20px;
-
-    border-top: 1px solid #dce8ef;
-    color: #718594;
-    font-size: 12px;
+.final-result {
+    background: #e8f5ee;
+    padding: 22px;
     text-align: center;
+    border-radius: 10px;
+    margin-bottom: 25px;
 }
 
-/* Mobile layout */
+.final-result p {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.final-result h2 {
+    color: #176b50;
+    font-size: 25px;
+}
+
+.model-results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.model-card {
+    background: #f8fafc;
+    border: 1px solid #ddd;
+    padding: 18px;
+    border-radius: 8px;
+}
+
+.model-card h4 {
+    color: #176b50;
+    margin-bottom: 10px;
+}
+
+.model-card p {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.model-card span {
+    font-size: 13px;
+    color: #666;
+}
+
+.voting-info {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.voting-info p {
+    margin: 10px 0;
+}
+
+.voting-note {
+    color: #666;
+    font-size: 13px;
+    margin-top: 15px !important;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #888;
+    font-size: 13px;
+}
+
 @media (max-width: 600px) {
-    body {
-        padding: 12px;
-        background-attachment: scroll;
-    }
 
     .container {
-        margin: 8px auto;
-        padding: 25px 18px;
-        border-radius: 17px;
+        padding: 20px;
     }
 
-    h1 {
-        font-size: 26px;
+    .model-results {
+        grid-template-columns: 1fr;
     }
 
-    .subtitle {
-        font-size: 14px;
+    header h1 {
+        font-size: 23px;
     }
 
-    .results h2 {
-        font-size: 22px;
-    }
-
-    .result-card {
-        gap: 12px;
-        padding: 16px;
-    }
-
-    .model-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .disease-name {
-        font-size: 17px;
-    }
 }
